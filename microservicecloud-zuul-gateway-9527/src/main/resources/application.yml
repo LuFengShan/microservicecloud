@@ -1,0 +1,30 @@
+server: 
+  port: 9527
+ 
+spring: 
+  application:
+    name: microservicecloud-zuul-gateway
+ 
+eureka: # 服务注册中心的配置
+  client: 
+    service-url: 
+      defaultZone: http://eureka7001.com:7001/eureka,http://eureka7002.com:7002/eureka,http://eureka7003.com:7003/eureka  
+  instance:
+    instance-id: gateway-9527.com
+    prefer-ip-address: true 
+ 
+ 
+zuul: # 网关（路由）的配置
+  #ignored-services: microservicecloud-dept # 让服务的真名隐藏 ，不能访问，只能使用代理来访问
+  prefix: /atguigu # 设置微服务公共唯一的前缀
+  ignored-services: "*" # 让所有微服务的真名都隐藏 ，不能访问，只能使用代理来访问
+  routes: 
+    mydept.serviceId: microservicecloud-dept # 微服务真名（诸葛亮）
+    mydept.path: /mydept/** # 微服务的代理名字 （孔明）
+ 
+info:
+  app.name: atguigu-microcloud
+  company.name: www.atguigu.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
+
